@@ -4,3 +4,4 @@ return {
   --- @type blink.indent.Config
   -- opts = {},
 }
+

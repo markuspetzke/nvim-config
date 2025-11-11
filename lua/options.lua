@@ -10,6 +10,11 @@ vim.opt.termguicolors = true
 vim.opt.linebreak = true
 vim.opt.grepformat = "%f:%l:%c:%m"
 
+-- Dashboard
+vim.api.nvim_set_hl(0, 'DashboardHeader', { fg = '#61afef' })
+vim.api.nvim_set_hl(0, 'DashboardCenter', { fg = '#98c379' })
+vim.api.nvim_set_hl(0, 'DashboardFooter', { fg = '#7c7c7c', italic = true })
+
 vim.opt.clipboard = vim.env.SSH_CONNECTION and "" or "unnamedplus" -- Sync with system clipboard
 
 -- Enable break indent

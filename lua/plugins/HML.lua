@@ -1,4 +1,5 @@
 return {
   'mawkler/hml.nvim',
-  opts = {}
+  opts = {},
 }
+
