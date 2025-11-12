@@ -1,12 +1,10 @@
 return {
   'tris203/precognition.nvim',
-  --event = "VeryLazy",
   opts = {
     disabled_fts = {
-      'dashboard', -- Füge das hier hinzu
+      'dashboard',
       'snacks_explorer',
       'TelescopePrompt',
     },
   },
 }
-

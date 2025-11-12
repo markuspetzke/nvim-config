@@ -2,39 +2,33 @@ return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
   opts = {
-    preset = 'modern', -- oder "classic", "helix"
-    delay = 0, -- Zeit in ms bevor which-key erscheint
+    preset = 'modern',
+    delay = 0,
     icons = {
-      breadcrumb = '»', -- Symbol für verschachtelte Gruppen
-      separator = '➜', -- Symbol zwischen Key und Beschreibung
-      group = '+', -- Symbol für Gruppen
+      breadcrumb = '»',
+      separator = '➜',
+      group = '+',
     },
     win = {
-      border = 'rounded', -- "none", "single", "double", "rounded", "solid", "shadow"
-      padding = { 1, 2 }, -- Extra Fenster-Padding [top/bottom, right/left]
+      border = 'rounded',
+      padding = { 1, 2 },
     },
   },
   config = function(_, opts)
     local wk = require 'which-key'
     wk.setup(opts)
 
-    -- Registriere deine Keybindings mit Beschreibungen
     wk.add {
-      -- Leader-basierte Mappings
+      -- [Telecope]
       { '<leader>f', group = 'Find (Telescope)' },
-      { '<leader>ff', desc = 'Find Files' },
-      { '<leader>fg', desc = 'Live Grep' },
-      { '<leader>fb', desc = 'Find Buffers' },
-      { '<leader>fh', desc = 'Help Tags' },
-      { '<leader>fa', desc = 'Aerial' },
-      { '<leader>fp', desc = 'Projects' },
 
-      { '<leader>l', group = 'LSP/Code' },
-      { '<leader>lr', desc = 'Rename' },
-      { '<leader>la', desc = 'Code Action' },
-      { '<leader>lf', desc = 'Format' },
-      { '<leader>ld', desc = 'Diagnostics' },
+      { '<leader>c', group = 'LSP/Code' },
+      { '<leader>cr', desc = 'Rename' },
+      { '<leader>ca', desc = 'Code Action' },
+      { '<leader>cf', desc = 'Format' },
+      { '<leader>cd', desc = 'Diagnostics' },
 
+      -- [LazyGit]
       { '<leader>g', group = 'Git' },
       { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
 
@@ -47,28 +41,11 @@ return {
       { '<leader>q', group = 'Quit/Session' },
       { '<leader>x', group = 'Diagnostics/Quickfix' },
 
-      -- Normale Mode Mappings
-      { 'g', group = 'Goto' },
-      { 'gd', desc = 'Goto Definition' },
-      { 'gr', desc = 'Goto References' },
-      { 'gi', desc = 'Goto Implementation' },
-      { 'gt', desc = 'Goto Type Definition' },
+      -- [Buffer]
+      { '<leader>b', group = 'Buffer' },
 
-      { 'gs', group = 'Surround' },
-      { 'z', group = 'Fold' },
-
-      { '[', group = 'Previous' },
-      { '[b', desc = 'Previous Buffer' },
-      { '[d', desc = 'Previous Diagnostic' },
-
-      { ']', group = 'Next' },
-      { ']b', desc = 'Next Buffer' },
-      { ']d', desc = 'Next Diagnostic' },
-
-      -- Visual Mode
-      { mode = 'v', '<leader>', group = 'Leader' },
-      { mode = 'v', '<leader>g', group = 'Git' },
-      { mode = 'v', '<leader>l', group = 'LSP' },
+      { '<leader>u', group = 'UI/Toggle' },
+      { '<leader>n', group = 'Notifications' },
     }
   end,
 }

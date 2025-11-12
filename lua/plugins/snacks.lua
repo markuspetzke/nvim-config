@@ -4,22 +4,19 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
-    -- Smooth Animationen
     animate = {
-      enabled = true,
-      duration = 20, -- ms pro Frame
+      enabled = false,
+      duration = 20,
       easing = 'linear',
       fps = 60,
     },
 
-    -- Große Dateien optimieren
     bigfile = {
       enabled = true,
-      notify = true, -- Benachrichtigung wenn bigfile erkannt wird
+      notify = true,
       size = 1.5 * 1024 * 1024, -- 1.5MB
-      -- Welche Features bei großen Dateien deaktiviert werden:
       setup = function(ctx)
-        vim.cmd [[NoMatchParen]] -- Keine Klammer-Highlights
+        vim.cmd [[NoMatchParen]]
         vim.b.minianimate_disable = true
         vim.schedule(function()
           vim.bo[ctx.buf].syntax = ctx.ft
@@ -27,30 +24,25 @@ return {
       end,
     },
 
-    -- Dashboard deaktiviert (du nutzt ja dashboard-nvim)
     dashboard = { enabled = false },
 
-    -- Snacks Explorer (File Manager)
     explorer = {
       enabled = true,
       win = {
         position = 'left',
-        width = 35,
+        width = 30,
         border = 'rounded',
       },
-      -- Filter für versteckte Dateien
       filters = {
-        hidden = false, -- Zeige hidden files
+        hidden = false,
         custom = { '^%.git$', '^node_modules$', '^%.DS_Store$' },
       },
-      -- Icons
       icons = {
         folder_closed = '',
         folder_open = '',
         file = '',
         symlink = '',
       },
-      -- Formatierung
       format = {
         filename = {
           width = 0, -- 0 = no limit
@@ -63,12 +55,10 @@ return {
       },
     },
 
-    -- Indent Guides (du hast blink.indent, also aus)
     indent = { enabled = false },
 
-    -- Bessere Input-Prompts
     input = {
-      enabled = true,
+      enabled = false,
       icon = ' ',
       icon_hl = 'SnacksInputIcon',
       win = {
@@ -76,13 +66,11 @@ return {
       },
     },
 
-    -- Picker (Telescope ist besser, also aus)
     picker = { enabled = false },
 
-    -- Notifier (du hast nvim-notify)
     notifier = {
       enabled = true,
-      timeout = 3000, -- 3 Sekunden
+      timeout = 3000,
       width = { min = 40, max = 0.4 },
       height = { min = 1, max = 0.6 },
       margin = { top = 0, right = 1, bottom = 0 },
@@ -96,15 +84,13 @@ return {
         debug = ' ',
         trace = ' ',
       },
-      style = 'compact', -- "compact" oder "fancy" oder "minimal"
+      style = 'fancy', -- "compact" oder "fancy" oder "minimal"
     },
 
-    -- Schnelleres Laden von Dateien
     quickfile = { enabled = true },
 
-    -- Scope Highlights (zeigt aktuellen Scope)
     scope = {
-      enabled = true,
+      enabled = false,
       -- Cursor muss mindestens so lange auf Position sein
       cursor = {
         enabled = true,
@@ -127,23 +113,21 @@ return {
       },
     },
 
-    -- Smooth Scrolling
     scroll = {
-      enabled = true,
+      enabled = false,
       animate = {
         duration = { step = 15, total = 250 },
         easing = 'outQuad',
       },
-      spamming = 10, -- Scrolling-Events innerhalb 10ms werden gruppiert
-      -- Animiere diese Scroll-Befehle:
-      filter = function(buf, event)
+      spamming = 10,
+      filter = function(buf)
         return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype ~= 'terminal' and not vim.wo.diff
       end,
     },
 
     -- Statuscolumn (Zeilen-Nummern, Signs, Folds)
     statuscolumn = {
-      enabled = true,
+      enabled = false,
       left = { 'mark', 'sign' }, -- Links: Marks & Signs (Git, Diagnostics)
       right = { 'fold', 'git' }, -- Rechts: Fold & Git
       folds = {
@@ -156,38 +140,9 @@ return {
       refresh = 50, -- Refresh-Rate in ms
     },
 
-    -- Word highlighting (wie vim-illuminate)
-    words = {
-      enabled = true,
-      debounce = 100, -- ms Verzögerung
-      notify_jump = false, -- Keine Notification beim Springen
-      notify_end = false, -- Keine Notification am Ende
-      foldopen = true, -- Öffne Folds wenn Wort darin
-      jumplist = true, -- Füge zu Jumplist hinzu
-      modes = { 'n' }, -- Nur in Normal Mode
-    },
-
     -- Zen Mode (optional, sehr nützlich!)
     zen = {
-      enabled = false, -- Aktiviere wenn du willst
-      toggles = {
-        dim = true,
-        git_signs = false,
-        mini_diff_signs = false,
-        diagnostics = false,
-        inlay_hints = false,
-      },
-      zoom = {
-        width = 0.85, -- 85% Bildschirmbreite
-        height = 0.9, -- 90% Bildschirmhöhe
-      },
-      win = {
-        backdrop = 0.95,
-      },
-      show = {
-        statusline = false,
-        tabline = false,
-      },
+      enabled = true, -- Aktiviere wenn du willst
     },
 
     -- Styles für verschiedene Windows
@@ -205,14 +160,14 @@ return {
   keys = {
     -- Explorer
     {
-      '<leader>e',
+      '<leader>E',
       function()
         Snacks.explorer()
       end,
       desc = 'Explorer (Root Dir)',
     },
     {
-      '<leader>E',
+      '<leader>e',
       function()
         Snacks.explorer { cwd = vim.fn.expand '%:p:h' }
       end,
@@ -235,82 +190,14 @@ return {
       desc = 'Notification History',
     },
 
-    -- Git Browse (öffnet Datei/Zeile in GitHub/GitLab)
-    {
-      '<leader>gB',
-      function()
-        Snacks.gitbrowse()
-      end,
-      desc = 'Git Browse',
-      mode = { 'n', 'v' },
-    },
-    {
-      '<leader>gb',
-      function()
-        Snacks.git.blame_line()
-      end,
-      desc = 'Git Blame Line',
-    },
-    {
-      '<leader>gf',
-      function()
-        Snacks.lazygit.log_file()
-      end,
-      desc = 'Lazygit Current File History',
-    },
-    {
-      '<leader>gl',
-      function()
-        Snacks.lazygit.log()
-      end,
-      desc = 'Lazygit Log',
-    },
-
-    -- Rename (besseres Rename als vim.lsp.buf.rename)
-    {
-      '<leader>lr',
-      function()
-        Snacks.rename.rename_file()
-      end,
-      desc = 'Rename File',
-    },
-
-    -- Words (Wort-Highlights)
-    {
-      ']]',
-      function()
-        Snacks.words.jump(vim.v.count1)
-      end,
-      desc = 'Next Reference',
-      mode = { 'n', 't' },
-    },
-    {
-      '[[',
-      function()
-        Snacks.words.jump(-vim.v.count1)
-      end,
-      desc = 'Prev Reference',
-      mode = { 'n', 't' },
-    },
-
-    -- Scratch Buffer (temporärer Buffer)
-    {
-      '<leader>.',
-      function()
-        Snacks.scratch()
-      end,
-      desc = 'Toggle Scratch Buffer',
-    },
-    {
-      '<leader>S',
-      function()
-        Snacks.scratch.select()
-      end,
-      desc = 'Select Scratch Buffer',
-    },
-
     -- Zen Mode (wenn aktiviert)
-    -- { "<leader>z", function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+    {
+      '<leader>z',
+      function()
+        Snacks.zen()
+      end,
+      desc = 'Toggle Zen Mode',
+    },
   },
 
   init = function()

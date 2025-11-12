@@ -2,11 +2,19 @@ return {
   'nvimdev/dashboard-nvim',
   event = 'VimEnter',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  opts = {
+    options = {
+      auto_toggle_bufferline = false,
+    },
+  },
   config = function()
     require('dashboard').setup {
       theme = 'doom', -- 'doom' oder 'hyper'
       config = {
+
         header = {
+          '',
+          '',
           '',
           '',
           '',
@@ -30,7 +38,7 @@ return {
             desc_hl = 'String',
             key = 'f',
             key_hl = 'Number',
-            key_format = ' %s', -- Zeigt [f] an
+            key_format = ' %s',
             action = 'Telescope find_files',
           },
           {
@@ -75,8 +83,8 @@ return {
           },
           {
             icon = '  ',
-            desc = 'Lazy (Plugins)      ',
-            key = 'u',
+            desc = 'Lazy       ',
+            key = 'l',
             key_format = ' %s',
             action = 'Lazy',
           },

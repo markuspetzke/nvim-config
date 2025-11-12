@@ -7,5 +7,14 @@ return {
       ['<Up>'] = {},
       ['<Down>'] = {},
     },
+    disabled_filetypes = {
+      'qf',
+      'netrw',
+      'lazy',
+      'mason',
+      'dashboard',
+      'snacks_explorer',
+      'TelescopePrompt',
+    },
   },
 }
